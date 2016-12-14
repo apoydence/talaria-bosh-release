@@ -1,0 +1,26 @@
+---
+name: scheduler
+
+templates:
+  ctl.sh.erb: bin/ctl.sh
+  dns_health_check.erb: bin/dns_health_check
+
+packages:
+- scheduler
+
+consumes:
+- name: node
+  type: node
+  properties:
+  - port
+
+provides:
+- name: scheduler
+  type: scheduler
+  properties:
+  - port
+
+properties:
+  port:
+    description: "The port for the scheduler to listen on"
+    default: 8080

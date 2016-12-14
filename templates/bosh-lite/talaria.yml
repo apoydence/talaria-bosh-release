@@ -1,0 +1,89 @@
+---
+director_uuid: fb70f16a-4d6f-41f8-bc2e-0181a03dff18
+
+name: talaria
+
+stemcells:
+- alias: default
+  os: ubuntu-trusty
+  version: latest
+
+releases:
+- name: talaria
+  version: latest
+- name: consul
+  version: latest
+
+instance_groups:
+#- name: consul
+#  azs:
+#  - z1
+#  instances: 1
+#  persistent_disk_type: 1GB
+#  vm_type: small
+#  stemcell: default
+#  networks:
+#  - name: default
+#    static_ips:
+#    - 10.244.10.2
+#  jobs:
+#  - name: consul_agent
+#    release: consul
+#    properties:
+#      consul:
+#        agent:
+#          mode: server
+#          domain: talaria.internal
+#          servers: &3
+#            lan:
+#            - 10.244.10.2
+#        require_ssl: "((consul_require_ssl))"
+#        encrypt_keys: "((consul_encrypt_keys))"
+#        agent_cert: "((consul_agent_cert))"
+#        agent_key: "((consul_agent_agent_key))"
+#        ca_cert: "((consul_agent_ca_cert))"
+#        server_cert: "((consul_agent_server_cert))"
+#        server_key: "((consul_agent_server_key))"
+#  update:
+#    serial: true
+#    max_in_flight: 1
+
+- name: node
+  azs:
+  - z1
+  instances: 3
+  persistent_disk_type: 1GB
+  vm_type: small
+  stemcell: default
+  networks:
+  - name: default
+  jobs:
+  - name: node
+    release: talaria
+  update:
+    serial: true
+    max_in_flight: 10
+
+- name: scheduler
+  azs:
+  - z1
+  instances: 1
+  persistent_disk_type: 1GB
+  vm_type: small
+  stemcell: default
+  networks:
+  - name: default
+  jobs:
+  - name: scheduler
+    release: talaria
+  update:
+    serial: true
+    max_in_flight: 1
+
+
+update:
+  canaries: 10
+  max_in_flight: 10
+  canary_watch_time: 30000-60000
+  update_watch_time: 5000-60000
+  serial: true

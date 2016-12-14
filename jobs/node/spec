@@ -1,0 +1,24 @@
+---
+name: node
+templates:
+  ctl.sh.erb: bin/ctl.sh
+
+packages:
+- node
+
+consumes:
+- name: scheduler
+  type: scheduler
+  properties:
+  - port
+
+provides:
+- name: node
+  type: node
+  properties:
+  - port
+
+properties:
+  port:
+    description: "The port for the node to listen on"
+    default: 8080

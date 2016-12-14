@@ -1,0 +1,5 @@
+check process node
+  with pidfile /var/vcap/sys/run/node/node.pid
+  start program "/var/vcap/jobs/node/bin/ctl.sh start"
+  stop program "/var/vcap/jobs/node/bin/ctl.sh stop"
+  group vcap

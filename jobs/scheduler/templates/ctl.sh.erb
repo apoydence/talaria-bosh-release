@@ -1,0 +1,40 @@
+#!/bin/bash
+set -e
+
+RUN_DIR=/var/vcap/sys/run/scheduler
+LOG_DIR=/var/vcap/sys/log/scheduler
+PIDFILE=$RUN_DIR/scheduler.pid
+
+mkdir -p $RUN_DIR
+mkdir -p $LOG_DIR
+chown -R vcap:vcap $LOG_DIR
+
+<%=
+
+node = link("node")
+
+%>
+
+export PORT=<%=p("port")%>
+export NODES=<%=link("node").instances.map{|instance| "#{instance.address}:#{link('node').p('port')}"}.join(',') %>
+
+case $1 in
+
+start)
+    ulimit -n 65536
+    chpst -u vcap:vcap /var/vcap/packages/scheduler/scheduler &>> $LOG_DIR/scheduler.log &
+    echo $! > $PIDFILE
+
+    ;;
+
+stop)
+    kill $(cat $PIDFILE)
+
+    ;;
+
+  *)
+    echo "Usage: ctl {start|stop}"
+
+    ;;
+
+esac

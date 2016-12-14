@@ -1,0 +1,7 @@
+# abort script on any command that exits with a non zero value
+set -e
+
+cd talaria
+gunzip node.gz
+chmod a+x node
+cp -a * ${BOSH_INSTALL_TARGET}

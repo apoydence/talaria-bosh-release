@@ -1,0 +1,48 @@
+---
+meta: (( merge ))
+
+name: (( merge ))
+director_uuid: (( merge ))
+releases:
+-  {name: consul, version: latest}
+-  {name: talaria, version: latest}
+
+compilation:
+  workers: (( merge ))
+  network: default
+  reuse_compilation_vms: true
+  cloud_properties: (( merge ))
+
+update:
+  canaries: 1
+  serial: true
+  canary_watch_time: 30000-100000
+  update_watch_time: 30000-100000
+  max_in_flight: 1
+  max_errors: 1
+
+networks:
+- name: default
+  subnets: (( merge ))
+
+resource_pools:
+- name: default
+  network: default
+  stemcell: (( meta.stemcell ))
+  size: (( auto ))
+  cloud_properties:
+    <<: (( merge ))
+
+jobs:
+- name: talaria
+  templates:
+  - {name: consul_agent, release: consul}
+  - {name: talaria, release: talaria}
+  instances: 1
+  resource_pool: default
+  networks:
+  - name: default
+    static_ips: (( merge ))
+
+properties:
+  consul: (( merge ))

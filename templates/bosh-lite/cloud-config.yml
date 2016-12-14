@@ -1,0 +1,39 @@
+azs:
+- name: z1
+
+vm_types:
+- name: small
+
+disk_types:
+- name: 1GB
+  disk_size: 1024
+
+compilation:
+  workers: 6
+  network: compilation
+  az: z1
+  reuse_compilation_vms: true
+  vm_type: small
+
+networks:
+- name: default
+  type: manual
+  subnets:
+  - range: 10.244.10.0/24
+    gateway: 10.244.10.1
+    az: z1
+    reserved:
+    - 10.244.10.0
+    - 10.244.10.1
+    static:
+    - 10.244.10.2
+    - 10.244.10.3
+- name: compilation
+  type: manual
+  subnets:
+  - range: 10.244.11.0/24
+    gateway: 10.244.11.1
+    az: z1
+    reserved:
+    - 10.244.11.0
+    - 10.244.11.1
