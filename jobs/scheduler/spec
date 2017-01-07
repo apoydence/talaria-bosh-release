@@ -13,12 +13,7 @@ consumes:
   type: node
   properties:
   - port
-
-provides:
-- name: scheduler
-  type: scheduler
-  properties:
-  - port
+  - intra_port
 
 properties:
   port:

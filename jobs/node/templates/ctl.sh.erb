@@ -9,13 +9,8 @@ mkdir -p $RUN_DIR
 mkdir -p $LOG_DIR
 chown -R vcap:vcap $LOG_DIR
 
-<%=
-scheduler = link("scheduler")
-%>
-
-
-export PORT=<%=p("port")%>
-export SCHEDULER_URI=<%="#{scheduler.instances.first.address}:#{scheduler.p('port')}"%>
+export ADDR=<%="#{spec.address}:#{p('port')}"%>
+export INTRA_ADDR=<%="#{spec.address}:#{p('intra_port')}"%>
 
 case $1 in
 

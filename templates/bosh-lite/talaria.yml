@@ -61,7 +61,6 @@ instance_groups:
   - name: node
     release: talaria
   update:
-    serial: true
     max_in_flight: 10
 
 - name: scheduler
@@ -77,7 +76,6 @@ instance_groups:
   - name: scheduler
     release: talaria
   update:
-    serial: true
     max_in_flight: 1
 
 
@@ -86,4 +84,4 @@ update:
   max_in_flight: 10
   canary_watch_time: 30000-60000
   update_watch_time: 5000-60000
-  serial: true
+  serial: false

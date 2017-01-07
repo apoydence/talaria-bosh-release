@@ -15,8 +15,8 @@ node = link("node")
 
 %>
 
-export PORT=<%=p("port")%>
-export NODES=<%=link("node").instances.map{|instance| "#{instance.address}:#{link('node').p('port')}"}.join(',') %>
+export ADDR=<%="#{spec.address}:#{p('port')}"%>
+export NODES=<%=link("node").instances.map{|instance| "#{instance.address}:#{link('node').p('intra_port')}"}.join(',') %>
 
 case $1 in
 
