@@ -15,4 +15,5 @@ gzip -f $workspace/scheduler
 pushd $workspace > /dev/null
   bosh add-blob ./node.gz talaria/node.gz > /dev/null
   bosh add-blob ./scheduler.gz talaria/scheduler.gz > /dev/null
+  rm node.gz scheduler.gz >> /dev/null
 popd > /dev/null

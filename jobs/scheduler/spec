@@ -15,6 +15,12 @@ consumes:
   - port
   - intra_port
 
+provides:
+- name: scheduler
+  type: scheduler
+  properties:
+  - port
+
 properties:
   port:
     description: "The port for the scheduler to listen on"
